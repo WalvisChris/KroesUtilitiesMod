@@ -11,6 +11,7 @@ namespace KroesSupermarketMod.Patches
         private static Vector3 pendingAngularVelocity;
         private static bool shouldApplyPhysics = false;
 
+        // UserCode_Cmd: runs on server, requested by client
         [HarmonyPatch(typeof(ManagerBlackboard), "UserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single")]
         [HarmonyPrefix]
         public static void Prefix(ref Vector3 spawnpoint, float YRotation)
@@ -32,6 +33,7 @@ namespace KroesSupermarketMod.Patches
             shouldApplyPhysics = true;
         }
 
+        // UserCode_Cmd: runs on server, requested by client
         [HarmonyPatch(typeof(ManagerBlackboard), "UserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single")]
         [HarmonyPostfix]
         public static void Postfix(Vector3 spawnpoint)
@@ -62,6 +64,7 @@ namespace KroesSupermarketMod.Patches
             }
         }
 
+        // OnStartClient: default mirror callback that runs on client when network object starts
         [HarmonyPatch(typeof(BoxData), "OnStartClient")]
         [HarmonyPostfix]
         public static void OnStartClient_Postfix(BoxData __instance)

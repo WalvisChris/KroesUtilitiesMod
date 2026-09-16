@@ -1,12 +1,13 @@
 # Kroes Utilities  
 Some quality of life additions. Modify using the config.  
 
-- automatically sets price gun to 2x  
-- visual franchise points progress bar  
-- custom npc voice lines when hit with broom  
-- throwable boxes (can hit NPCs and Players)  
-- Euro currency sign compatibility  
-- chat commands (TESTING)  
+- PriceGun: automatically set price to 2x market price.  
+- Franchise points now show a progress bar.    
+- Throwable boxes:  
+    * can hit NPCs and Players.  
+    * can be thrown against recycler and trash bin (works with perks).  
+- Euro currency symbol compatibility for price displays.  
+- chat commands (TESTING!).  
 
 ## Chat Commands  
 ### /npc  
@@ -16,19 +17,15 @@ Some quality of life additions. Modify using the config.
 `/npc <NUMBER>` starts a certain animation clip (0 through 41).  
 
 ### /weather  
-*[being tested...]*  
+*[server-only]*  
 `/weather <NUMBER>` sets the weather (0 through 5).  
 
-### /notif  
+### /notify  
 *[client-only]*  
-`/notif1 <TEXT>` create a canvas notification for yourself.  
-`/notif2 <TEXT>` create an important notification for yourself.  
+`/notify <NUMBER> <TEXT>` create a canvas notification for yourself (number 0 or 1).  
 
 # Todo  
 - Box Throwing:
     * test box throw physics for clients.  
     * sync box throw physics between clients.  
     * test box throw hitting NPCs and Players for clients.  
-- Chat Commands:
-    * `/weather`:
-        - test client and server requests.  

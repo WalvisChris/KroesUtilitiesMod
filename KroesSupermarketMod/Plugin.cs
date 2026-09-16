@@ -31,7 +31,11 @@ namespace KroesSupermarketMod
             if (config.franchiseProgressBar) harmony.PatchAll(typeof(FranchiseBarPatch));
             if (config.chatCommands) harmony.PatchAll(typeof(ChatCommandsPatch));
             if (config.euroSymbol) harmony.PatchAll(typeof(EuroSymbolPatch));
-            if (config.throwBoxes) harmony.PatchAll(typeof(ThrowableBoxesPatch));
+            if (config.throwBoxes)
+            {
+                harmony.PatchAll(typeof(LayoutManagerPatch)); // to get recycler game object
+                harmony.PatchAll(typeof(ThrowableBoxesPatch));
+            }
 
             // finish loading
             mls.LogInfo("Loaded succesfully");

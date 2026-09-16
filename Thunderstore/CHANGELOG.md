@@ -1,6 +1,7 @@
 # v1.0.7 (16/06/2026)  
-- General code cleanup.  
-- ...  
+- General code cleanup (way more professional :D ).  
+- Attempted thrown box physics sync between all clients.  
+- Throw boxes can be throw against recyclers and bins (works with perks).  
 
 # v1.0.6 (16/09/2026) NIGHTLY BUILD  
 - Throwable box physics sync testing.  

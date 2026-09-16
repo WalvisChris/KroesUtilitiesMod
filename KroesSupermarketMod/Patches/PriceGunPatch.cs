@@ -15,9 +15,9 @@ namespace KroesSupermarketMod.Patches
             if (float.TryParse(___marketPriceTMP.text.Substring(1).Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out float marketPrice))
             {
                 string currencySign = "$";
-                var culture = Plugin.config.euroSign ? new CultureInfo("nl-NL") : CultureInfo.InvariantCulture;
+                var culture = Plugin.config.euroSymbol ? new CultureInfo("nl-NL") : CultureInfo.InvariantCulture;
 
-                if (Plugin.config.euroSign)
+                if (Plugin.config.euroSymbol)
                 {
                     currencySign = "€";
                     // this.marketPriceTMP.text = "$" + num8.ToString();   <-- original game code reference
