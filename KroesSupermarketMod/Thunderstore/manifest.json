@@ -1,0 +1,9 @@
+{
+    "name": "Kroes_Utilities",
+    "version_number": "1.0.7",
+    "website_url": "https://github.com/WalvisChris/KroesUtilitiesMod",
+    "description": "Some quality of live additions.",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2305"
+    ]
+}
