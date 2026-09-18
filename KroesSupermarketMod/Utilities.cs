@@ -1,6 +1,9 @@
 ﻿using HarmonyLib;
+using KroesSupermarketMod.Patches;
+using Mirror;
 using Steamworks;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -10,6 +13,7 @@ namespace KroesSupermarketMod
 {
     internal class Utilities
     {
+        // HELPER METHODS
         private static void CreateCanvasNotification(string message)
         {
             var manager = UnityEngine.Object.FindFirstObjectByType<GameCanvas>();
@@ -168,6 +172,8 @@ namespace KroesSupermarketMod
 
             return 0f;
         }
+        
+        // GAME REFERENCES
         public static GameObject recycleObj1 = null;
         public static GameObject recycleObj2 = null;
         public static GameObject trashObj = null;
@@ -227,6 +233,16 @@ namespace KroesSupermarketMod
             "34_Capoeira",
             "35_Statue"
         };
+        private static readonly Dictionary<string, int> commonProps = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "ladder", 8 }
+        };
+        private static readonly Dictionary<string, int> commonDecorations = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            { "tv", 3 },
+            { "train", 68 },
+            { "wagon", 275 }
+        };
         public static bool TryParseCommand(string rawChatMessage, out string command, out string[] args)
         {
             command = string.Empty;
@@ -248,7 +264,7 @@ namespace KroesSupermarketMod
         {
             NPC_Info[] allNPCs = UnityEngine.Object.FindObjectsByType<NPC_Info>(FindObjectsSortMode.None);
 
-            if (args.Length == 1)
+            if (args.Length < 1)
             {
                 foreach (NPC_Info npc in allNPCs)
                 {
@@ -259,9 +275,7 @@ namespace KroesSupermarketMod
                 return;
             }
 
-            string subArg = args[0].Trim().ToLower();
-
-            if (subArg == "random")
+            if (args[0].Trim().ToLower() == "random")
             {
                 int randomIndex = UnityEngine.Random.Range(0, poseStrings.Length);
                 string randomPose = poseStrings[randomIndex];
@@ -275,7 +289,7 @@ namespace KroesSupermarketMod
                 return;
             }
 
-            if (int.TryParse(subArg, out int animationIndex))
+            if (int.TryParse(args[0], out int animationIndex))
             {
                 if (animationIndex >= 0 && animationIndex < poseStrings.Length)
                 {
@@ -343,6 +357,39 @@ namespace KroesSupermarketMod
                 else if (notificationType == 1)
                 {
                     CreateImportantNotification(args[1]);
+                }
+            }
+        }
+        public static void ChatCommand_Spawn(string[] args)
+        {
+            if (args.Length < 1) return;
+
+            if (Camera.main != null)
+            {
+                string search = args[0].Trim().ToLower();
+
+                // props
+                if (commonProps.TryGetValue(search, out int result))
+                {
+                    Transform camTransform = Camera.main.transform;
+                    Vector3 vector = camTransform.position + camTransform.forward * 3.5f;
+
+                    GameData.Instance.GetComponent<NetworkSpawner>().CmdSpawnProp(result, vector, Vector3.zero);
+                    CreateCanvasNotification($" Spawned prop {search}.");
+
+                    return;
+                }
+
+                // decorations
+                if (commonDecorations.TryGetValue(search, out int index))
+                {
+                    Transform camTransform = Camera.main.transform;
+                    Vector3 vector = camTransform.position + camTransform.forward * 3.5f;
+
+                    GameData.Instance.GetComponent<NetworkSpawner>().CmdSpawnDecoration(index, vector, Vector3.zero);
+                    CreateCanvasNotification($" Spawned decoration {search}.");
+
+                    return;
                 }
             }
         }

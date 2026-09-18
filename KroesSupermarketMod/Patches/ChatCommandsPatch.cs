@@ -1,4 +1,7 @@
 ﻿using HarmonyLib;
+using KroesSupermarketMod.CustomScripts;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.Events;
 
 namespace KroesSupermarketMod.Patches
 {
@@ -26,6 +29,11 @@ namespace KroesSupermarketMod.Patches
                     case "notify":
                         Plugin.mls.LogInfo($"/notify: {string.Join(", ", args)}");
                         Utilities.ChatCommand_Notify(args);
+                        return false;
+
+                    case "spawn":
+                        Plugin.mls.LogInfo($"/spawn: {string.Join(", ", args)}");
+                        Utilities.ChatCommand_Spawn(args);
                         return false;
 
                     default:

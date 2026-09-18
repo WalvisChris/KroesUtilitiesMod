@@ -1,4 +1,13 @@
-# v1.0.7 (16/06/2026)  
+# v1.1.0 (18/09/2026)  
+- Finally fixed throwable boxes for all clients.  
+- Third person camera option with scroll wheel.  
+
+# v1.0.8 (16/09/2026)  
+- Attempt to sync box throw physics between server and client.  
+- Throw boxes 1f in front of player instead of the default 3.5f.  
+- `/npc` chat command arguments fix.  
+
+# v1.0.7 (16/09/2026)  
 - General code cleanup (way more professional :D ).  
 - Attempted thrown box physics sync between all clients.  
 - Throw boxes can be throw against recyclers and bins (works with perks).  

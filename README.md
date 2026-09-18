@@ -7,6 +7,7 @@ Some quality of life additions. Modify using the config.
     * can hit NPCs and Players.  
     * can be thrown against recycler and trash bin (works with perks).  
 - Euro currency symbol compatibility for price displays.  
+- Third person camera using the mouse scroll wheel.  
 - chat commands (TESTING!).  
 
 ## Chat Commands  
@@ -24,8 +25,10 @@ Some quality of life additions. Modify using the config.
 *[client-only]*  
 `/notify <NUMBER> <TEXT>` create a canvas notification for yourself (number 0 or 1).  
 
+### /spawn  
+*[everyone]*  
+`/spawn <TEXT>` spawns a item or prop. Choose ladder, tv, train or wagon. No despawning implemented yet!  
+
 # Todo  
-- Box Throwing:
-    * test box throw physics for clients.  
-    * sync box throw physics between clients.  
-    * test box throw hitting NPCs and Players for clients.  
+- Vehicle driving.  
+- Custom prefab spawning across all clients.  

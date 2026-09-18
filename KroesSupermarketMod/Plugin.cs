@@ -2,6 +2,8 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using KroesSupermarketMod.Patches;
+using Mirror;
+using UnityEngine;
 
 namespace KroesSupermarketMod
 {
@@ -10,7 +12,7 @@ namespace KroesSupermarketMod
     {
         private const string GUID = "com.chris.kroes.supermarket";
         private const string NAME = "Kroes Supermarket";
-        private const string VERSION = "1.0.7";
+        private const string VERSION = "1.1.0";
 
         internal static ManualLogSource mls;
         internal static ConfigManager config;
@@ -36,6 +38,7 @@ namespace KroesSupermarketMod
                 harmony.PatchAll(typeof(LayoutManagerPatch)); // to get recycler game object
                 harmony.PatchAll(typeof(ThrowableBoxesPatch));
             }
+            if (config.thirdPersonCamera) harmony.PatchAll(typeof(ThirdPersonCameraPatch));
 
             // finish loading
             mls.LogInfo("Loaded succesfully");

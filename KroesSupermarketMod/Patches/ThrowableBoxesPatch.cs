@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using KroesSupermarketMod.CustomScripts;
+using Mirror;
 using UnityEngine;
 
 namespace KroesSupermarketMod.Patches
@@ -7,64 +8,74 @@ namespace KroesSupermarketMod.Patches
     [HarmonyPatch]
     internal class ThrowableBoxesPatch
     {
-        private static Vector3 pendingVelocity;
-        private static Vector3 pendingAngularVelocity;
-        private static bool shouldApplyPhysics = false;
+        private static float throwForce = 10f;
+        private static float spinStrength = 5f;
 
-        // UserCode_Cmd: runs on server, requested by client
-        [HarmonyPatch(typeof(ManagerBlackboard), "UserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single")]
+        // SERVER: spawn box 1f in front instead of 3.5f
+        [HarmonyPatch(typeof(ManagerBlackboard), "CmdSpawnBoxFromPlayer")]
         [HarmonyPrefix]
-        public static void Prefix(ref Vector3 spawnpoint, float YRotation)
+        public static void CmdSpawnBoxFromPlayer_Prefix(ref Vector3 spawnpoint)
         {
-            Vector3 forwardDirection = Quaternion.Euler(0f, YRotation, 0f) * Vector3.forward;
-            spawnpoint -= forwardDirection * 2.0f;
-
-            Vector3 throwVector = (forwardDirection * 1.0f) + (Vector3.up * 0.3f);
-            float throwForce = 10f;
-            pendingVelocity = throwVector * throwForce;
-
-            float spinStrength = 5f;
-            pendingAngularVelocity = new Vector3(
-                UnityEngine.Random.Range(-spinStrength, spinStrength),
-                UnityEngine.Random.Range(-spinStrength, spinStrength),
-                UnityEngine.Random.Range(-spinStrength, spinStrength)
-            );
-
-            shouldApplyPhysics = true;
+            if (Camera.main != null)
+            {
+                Transform camTransform = Camera.main.transform;
+                spawnpoint = camTransform.position + camTransform.forward * 1f;
+            }
         }
 
-        // UserCode_Cmd: runs on server, requested by client
+        // SERVER: add impulse
         [HarmonyPatch(typeof(ManagerBlackboard), "UserCode_CmdSpawnBoxFromPlayer__Vector3__Int32__Int32__Single")]
         [HarmonyPostfix]
-        public static void Postfix(Vector3 spawnpoint)
+        public static void UserCode_CmdSpawnBoxFromPlayer_Postfix(Vector3 spawnpoint, int productID, int numberOfProductsInBox, float YRotation)
         {
-            if (!shouldApplyPhysics) return;
-            shouldApplyPhysics = false;
-
-            Collider[] colliders = Physics.OverlapSphere(spawnpoint, 0.6f);
-
+            Collider[] colliders = Physics.OverlapSphere(spawnpoint, 0.3f);
             foreach (var col in colliders)
             {
-                if (col.GetComponent<BoxData>() != null)
+                BoxData box = col.GetComponentInParent<BoxData>();
+                if (box != null)
                 {
-                    GameObject boxObj = col.gameObject;
-
-                    BoxHitDetector detector = boxObj.GetComponent<BoxHitDetector>();
-                    if (detector == null) detector = boxObj.AddComponent<BoxHitDetector>();
-                    detector.hasAlreadyHit = false;
-
-                    Rigidbody rb = col.GetComponent<Rigidbody>();
+                    Rigidbody rb = box.GetComponent<Rigidbody>();
                     if (rb != null)
                     {
-                        rb.velocity = pendingVelocity;
-                        rb.angularVelocity = pendingAngularVelocity;
-                        break;
+                        Plugin.mls.LogInfo("throwing box server-side"); // <-- just for multiplayer testing
+
+                        Vector3 forwardDirection = Quaternion.Euler(0f, YRotation, 0f) * Vector3.forward;
+                        Vector3 throwVector = (forwardDirection * 1.0f) + (Vector3.up * 0.3f);
+                        rb.velocity = throwVector * throwForce;
+                        rb.angularVelocity = new Vector3(
+                            UnityEngine.Random.Range(-spinStrength, spinStrength),
+                            UnityEngine.Random.Range(-spinStrength, spinStrength),
+                            UnityEngine.Random.Range(-spinStrength, spinStrength)
+                        );
                     }
                 }
             }
         }
 
-        // OnStartClient: default mirror callback that runs on client when network object starts
+        // CLIENT: add impulse
+        [HarmonyPatch(typeof(ManagerBlackboard), "UserCode_RpcParentBoxOnClient__GameObject")]
+        [HarmonyPostfix]
+        public static void UserCode_RpcParentBoxOnClient_Postfix(GameObject boxOBJ)
+        {
+            if (boxOBJ == null) return;
+            
+            Rigidbody rb = boxOBJ.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Plugin.mls.LogInfo("throwing box client-side"); // <-- just for multiplayer testing
+
+                Vector3 forwardDirection = -boxOBJ.transform.right; // compensate for YRotation + 90f
+                Vector3 throwVector = (forwardDirection * 1.0f) + (Vector3.up * 0.3f);
+                rb.velocity = throwVector * throwForce;
+                rb.angularVelocity = new Vector3(
+                    UnityEngine.Random.Range(-spinStrength, spinStrength),
+                    UnityEngine.Random.Range(-spinStrength, spinStrength),
+                    UnityEngine.Random.Range(-spinStrength, spinStrength)
+                );
+            }
+        }
+
+        // CLIENT: attach custom script
         [HarmonyPatch(typeof(BoxData), "OnStartClient")]
         [HarmonyPostfix]
         public static void OnStartClient_Postfix(BoxData __instance)

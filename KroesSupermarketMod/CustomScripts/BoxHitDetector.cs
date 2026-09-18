@@ -18,15 +18,14 @@ namespace KroesSupermarketMod.CustomScripts
         private GameObject trashObj = null;
         public bool hasAlreadyHit = false;
 
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            boxData = GetComponent<BoxData>();
+        }
+
         private void Awake()
         {
-            // rigidbody
-            rb = GetComponent<Rigidbody>();
-
-            // box data
-            boxData = GetComponent<BoxData>();
-
-            // trash/recycle spots
             if (Utilities.recycleObj1 != null) recycle1Obj = Utilities.recycleObj1;
             if (Utilities.recycleObj2 != null) recycle2Obj = Utilities.recycleObj2;
             if (Utilities.trashObj != null) trashObj = Utilities.trashObj;
@@ -46,7 +45,7 @@ namespace KroesSupermarketMod.CustomScripts
                 {
                     RecycleBox();
                 }
-                else if (distance3 < 2.5f)
+                else if (distance3 < 3f) // this one seems to be a little bigger for some reason
                 {
                     if (NPC_Manager.Instance.closestRecyclePerk)
                     {
@@ -88,13 +87,10 @@ namespace KroesSupermarketMod.CustomScripts
 
         private void CheckHit(GameObject otherOBJ)
         {
-            // 1. prevent multiplayer clients causing multiple executions at the same time
             if (!NetworkServer.active) return;
-
-            // 2. cases when shouldnt check hit
             if (hasAlreadyHit || rb == null || rb.velocity.magnitude < 1f) return;
 
-            // 3. NPC hit logic
+            // NPC hit logic
             if (otherOBJ.name == "HitTrigger" && otherOBJ.transform.parent && otherOBJ.transform.parent.GetComponent<NPC_Info>())
             {
                 hasAlreadyHit = true;
@@ -116,7 +112,7 @@ namespace KroesSupermarketMod.CustomScripts
                 return;
             }
 
-            // 4. Player hit logic
+            // Player hit logic
             if (otherOBJ.name == "HitTrigger" &&
                 otherOBJ.transform.parent &&
                 otherOBJ.transform.parent.transform.parent &&
