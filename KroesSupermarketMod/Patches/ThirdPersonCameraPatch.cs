@@ -8,12 +8,16 @@ namespace KroesSupermarketMod.Patches
     internal class ThirdPersonCameraPatch
     {
         private static bool isCameraInThirdPerson = false;
-        private static float thirdPersonCameraDistance = 4f;
+        public static float thirdPersonCameraDistance = 4f;
 
-        [HarmonyPatch(typeof(PlayerNetwork), "Update")]
+        [HarmonyPatch(typeof(CustomCameraController), "LateUpdate")]
         [HarmonyPostfix]
         private static void Postfix(CustomCameraController __instance)
         {
+            if (__instance.isInCameraEvent || __instance.inEmoteEvent || __instance.inVehicle) return;
+            Transform builderTransform = GameCanvas.Instance?.transform.Find("Builder");
+            if (builderTransform != null && builderTransform.gameObject.activeSelf) return;
+
             float scroll = Input.mouseScrollDelta.y;
 
             if (scroll < 0f && !isCameraInThirdPerson) // wheel down & not 3rd person
@@ -28,12 +32,18 @@ namespace KroesSupermarketMod.Patches
 
         private static void UpdateCamera(bool doThirdPerson)
         {
+            // Increased interation range?
+
             CustomCameraController controller = Camera.main?.GetComponent<CustomCameraController>();
             if (controller != null)
             {
+                object isInOptions = AccessTools.Field(typeof(CustomCameraController), "IsInOptions")?.GetValue(controller);
+                if (isInOptions is bool inOptions && inOptions) return;
+
                 isCameraInThirdPerson = doThirdPerson;
 
                 object thirdPersonFollow = AccessTools.Field(typeof(CustomCameraController), "thirdPersonFollow")?.GetValue(controller);
+
                 if (thirdPersonFollow != null)
                 {
                     // Camera Distance

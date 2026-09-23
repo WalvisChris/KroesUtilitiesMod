@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using KroesSupermarketMod.CustomScripts;
+using StarterAssets;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine.Events;
 

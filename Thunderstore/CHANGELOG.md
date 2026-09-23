@@ -1,3 +1,13 @@
+# v1.1.2 (23/09/2026)  
+- Third person camera back to mouse scroll wheel.  
+- Camera mode won't switch during UI menus or emotes.  
+- Third person camera distance can be changed in the config.  
+- Mini Transport vehicle can now contain 6 more boxes.  
+- Many Mini Transport vehicle settings can be changed in the config.  
+
+# v1.1.1 (20/09/2026)  
+- Changed third person bind to "J" (temporary fix).  
+
 # v1.1.0 (18/09/2026)  
 - Finally fixed throwable boxes for all clients.  
 - Third person camera option with scroll wheel.  

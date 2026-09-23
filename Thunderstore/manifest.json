@@ -1,8 +1,8 @@
 {
     "name": "Kroes_Utilities",
-    "version_number": "1.1.0",
+    "version_number": "1.1.2",
     "website_url": "https://github.com/WalvisChris/KroesUtilitiesMod",
-    "description": "Some quality of live additions.",
+    "description": "Better Mini Transporter, Third Person Camera and much more!",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2305"
     ]
