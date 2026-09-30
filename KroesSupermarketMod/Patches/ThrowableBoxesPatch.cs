@@ -80,7 +80,7 @@ namespace KroesSupermarketMod.Patches
         [HarmonyPostfix]
         public static void OnStartClient_Postfix(BoxData __instance)
         {
-            if (__instance.gameObject.GetComponent<BoxHitDetector>() == null) __instance.gameObject.AddComponent<BoxHitDetector>();
+            if (__instance.gameObject.GetComponent<ThrowableBoxBehaviour>() == null) __instance.gameObject.AddComponent<ThrowableBoxBehaviour>();
         }
     }
 }

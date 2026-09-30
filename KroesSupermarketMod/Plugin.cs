@@ -14,13 +14,12 @@ namespace KroesSupermarketMod
     {
         private const string GUID = "com.chris.kroes.supermarket";
         private const string NAME = "Kroes Supermarket";
-        private const string VERSION = "1.1.2";
+        private const string VERSION = "1.1.4";
 
         internal static ManualLogSource mls;
         internal static ConfigManager config;
         internal static Harmony harmony = new Harmony(GUID);
         internal static Plugin instance;
-        public static AssetBundle CustomAssets;
 
         private void Awake()
         {
@@ -31,9 +30,6 @@ namespace KroesSupermarketMod
 
             // config
             config = new ConfigManager(Config);
-
-            // assets
-            // LoadCustomAssets();
 
             // patches
             HarmonyPatches();
@@ -59,6 +55,11 @@ namespace KroesSupermarketMod
             {
                 harmony.PatchAll(typeof(EuroSymbolPatch));
                 mls.LogInfo("Patched: euro symbol");
+            }
+            if (config.disableBuildingLimits)
+            {
+                harmony.PatchAll(typeof(BuildingLimitsPatch));
+                mls.LogInfo("Patched: disable building limits");
             }
 
             // Third Person Camera
@@ -110,42 +111,5 @@ namespace KroesSupermarketMod
                 mls.LogInfo("Patched: chat commands (EXPERIMENTAL)");
             }
         }
-
-        //private void LoadCustomAssets()
-        //{
-        //    string bundlePath = Path.Combine(Path.GetDirectoryName(Info.Location), "Assets", "assets1");
-        //    if (!File.Exists(bundlePath))
-        //    {
-        //        mls.LogWarning("Missing asset bundle: assets1");
-        //        return;
-        //    }
-
-        //    CustomAssets = AssetBundle.LoadFromFile(bundlePath);
-        //    if (CustomAssets == null)
-        //    {
-        //        mls.LogWarning("Failed to load asset bundle");
-        //        return;
-        //    }
-
-        //    GameObject prefab = CustomAssets.LoadAsset<GameObject>("MyVehiclePrefab");
-        //    if (prefab == null)
-        //    {
-        //        mls.LogWarning("Failed to find MyVehiclePrefab in asset bundle!");
-        //        return;
-        //    }
-
-        //    // The prefab must already carry a NetworkIdentity from Unity (that is where its
-        //    // asset ID comes from). Registration itself is NOT done here: NetworkClient forgets
-        //    // registered prefabs when a session ends, so NetworkAddonPatch registers it before
-        //    // every host/join instead.
-        //    if (prefab.GetComponent<NetworkIdentity>() == null)
-        //    {
-        //        mls.LogError("MyVehiclePrefab is missing a NetworkIdentity component!");
-        //        return;
-        //    }
-
-        //    NetworkAddon.ObjectPrefab = prefab;
-        //    mls.LogInfo("Loaded MyVehiclePrefab");
-        //}
     }
 }

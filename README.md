@@ -5,6 +5,7 @@ Some quality of life additions. Everything can be changed using the config file.
 - **Double Price Gun:** the price gun price is set to 200% of market price by default.  
 - **Franchise Progress Bar:** a progress bar on the big screen shows how close you are to obtaining the next franchise point.  
 - **Euro Currency Symbol:** dollar signs get converted to euros, and points to comma's.  
+- **Build Limit:** you can build beyond the default world limits.  
 
 ### Third Person Camera  
 - Use **Mouse Scroll Wheel** to change between first- and third person camera.  

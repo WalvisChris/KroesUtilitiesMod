@@ -1,7 +1,4 @@
 ﻿using HarmonyLib;
-using KroesSupermarketMod.Patches;
-using Mirror;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using TMPro;

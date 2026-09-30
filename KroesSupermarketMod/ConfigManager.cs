@@ -21,6 +21,7 @@ namespace KroesSupermarketMod
         private ConfigEntry<float> accelerationRateCfg;
         private ConfigEntry<float> decelerationRateCfg;
         private ConfigEntry<float> maxRotationSpeedCfg;
+        private ConfigEntry<bool> disableBuildingLimitsCfg;
 
         // Project references
         internal bool customNpcHitNotifications => customNpcHitNotificationCfg.Value;
@@ -38,6 +39,7 @@ namespace KroesSupermarketMod
         internal float accelerationRate => accelerationRateCfg.Value;
         internal float decelerationRate => decelerationRateCfg.Value;
         internal float maxRotationSpeed => maxRotationSpeedCfg.Value;
+        internal bool disableBuildingLimits => disableBuildingLimitsCfg.Value;
 
         // Config Manager
         public ConfigManager(ConfigFile config)
@@ -46,7 +48,8 @@ namespace KroesSupermarketMod
             doublePriceGunCfg = config.Bind("General", "DoublePriceGun", true, "Enable double price gun feature.");
             franchiseProgressBarCfg = config.Bind("General", "FranchiseProgressBar", true, "Enable the franchise progress bar feature.");
             euroSymbolCfg = config.Bind("General", "EuroSymbol", false, "Replace dollar sign with euro.");
-            
+            disableBuildingLimitsCfg = config.Bind("General", "Disable Building Limits", true, "Placing builds is no longer limit to specific ranges.");
+
             // Third Person Camera
             thirdPersonCameraCfg = config.Bind("Third Person Camera", "Enable Third Person Camera", true, "Allow camera switching using the mouse scroll wheel.");
             thirdPersonCameraFollowDistanceCfg = config.Bind("Third Person Camera", "Camera Follow Distance", 4f, "(float) distance at which the camera follows you.");

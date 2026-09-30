@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace KroesSupermarketMod.CustomScripts
 {
-    public class BoxHitDetector : MonoBehaviour
+    public class ThrowableBoxBehaviour : MonoBehaviour
     {
         private Rigidbody rb;
         private BoxData boxData = null;

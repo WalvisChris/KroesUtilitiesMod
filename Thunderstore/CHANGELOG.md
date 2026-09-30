@@ -1,3 +1,9 @@
+# v1.1.4 (29/09/2026)  
+- Build limits can now also be disabled for all axis (added x and z).  
+
+# v1.1.3 (29/09/2026)  
+- Ability to remove the build height limit.  
+
 # v1.1.2 (23/09/2026)  
 - Third person camera back to mouse scroll wheel.  
 - Camera mode won't switch during UI menus or emotes.  
