@@ -22,6 +22,18 @@ Some quality of life additions. Everything can be changed using the config file.
 - **Chat Commands:** run commands from the chat using "/". See more details below.  
 - **World Borders:** show world borders and other hitboxes by pressing F8.  
 
+# Customer Shopping List  
+![shoppingList](https://raw.githubusercontent.com/WalvisChris/KroesUtilitiesMod/master/Media/screenshot-shoppinglist.png)  
+
+# Better Transporter  
+![transporter](https://raw.githubusercontent.com/WalvisChris/KroesUtilitiesMod/master/Media/screenshot-transporter.png)  
+
+# Franchise Progress Bar  
+![progressbar](https://raw.githubusercontent.com/WalvisChris/KroesUtilitiesMod/master/Media/screenshot-progressbar.png)  
+
+# Third Person  
+![thirdperson](https://raw.githubusercontent.com/WalvisChris/KroesUtilitiesMod/master/Media/screenshot-thirdperson.png)  
+
 # Chat Commands  
 ### /npc  
 *[client-only]*  
