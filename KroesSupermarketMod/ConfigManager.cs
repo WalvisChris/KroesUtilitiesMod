@@ -22,6 +22,8 @@ namespace KroesSupermarketMod
         private ConfigEntry<float> decelerationRateCfg;
         private ConfigEntry<float> maxRotationSpeedCfg;
         private ConfigEntry<bool> disableBuildingLimitsCfg;
+        private ConfigEntry<bool> showWorldBordersCfg;
+        private ConfigEntry<bool> customerShoppingListsCfg;
 
         // Project references
         internal bool customNpcHitNotifications => customNpcHitNotificationCfg.Value;
@@ -40,6 +42,8 @@ namespace KroesSupermarketMod
         internal float decelerationRate => decelerationRateCfg.Value;
         internal float maxRotationSpeed => maxRotationSpeedCfg.Value;
         internal bool disableBuildingLimits => disableBuildingLimitsCfg.Value;
+        internal bool showWorldBorders => showWorldBordersCfg.Value;
+        internal bool customerShoppingLists => customerShoppingListsCfg.Value;
 
         // Config Manager
         public ConfigManager(ConfigFile config)
@@ -49,6 +53,7 @@ namespace KroesSupermarketMod
             franchiseProgressBarCfg = config.Bind("General", "FranchiseProgressBar", true, "Enable the franchise progress bar feature.");
             euroSymbolCfg = config.Bind("General", "EuroSymbol", false, "Replace dollar sign with euro.");
             disableBuildingLimitsCfg = config.Bind("General", "Disable Building Limits", true, "Placing builds is no longer limit to specific ranges.");
+            customerShoppingListsCfg = config.Bind("General", "Customer Shopping Lists", true, "Enable customer shopping lists feature.");
 
             // Third Person Camera
             thirdPersonCameraCfg = config.Bind("Third Person Camera", "Enable Third Person Camera", true, "Allow camera switching using the mouse scroll wheel.");
@@ -67,6 +72,7 @@ namespace KroesSupermarketMod
             customNpcHitNotificationCfg = config.Bind("Experimental", "CustomNpcHitNotifications", false, "Enable custom voice lines (inside jokes).");
             throwBoxesCfg = config.Bind("Experimental", "ThrowBoxes", false, "Throw boxes instead of dropping.");
             chatCommandsCfg = config.Bind("Experimental", "ChatCommands", false, "Enable chat commands feature.");
+            showWorldBordersCfg = config.Bind("Experimental", "ShowWorldBorders", false, "Toggle world border visibility with F8.");
         }
 
     }

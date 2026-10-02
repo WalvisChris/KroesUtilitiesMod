@@ -14,7 +14,7 @@ namespace KroesSupermarketMod
     {
         private const string GUID = "com.chris.kroes.supermarket";
         private const string NAME = "Kroes Supermarket";
-        private const string VERSION = "1.1.4";
+        private const string VERSION = "1.2.0";
 
         internal static ManualLogSource mls;
         internal static ConfigManager config;
@@ -60,6 +60,11 @@ namespace KroesSupermarketMod
             {
                 harmony.PatchAll(typeof(BuildingLimitsPatch));
                 mls.LogInfo("Patched: disable building limits");
+            }
+            if (config.customerShoppingLists)
+            {
+                harmony.PatchAll(typeof(CustomerShoppingListPatch));
+                mls.LogInfo("Patched: customer shopping lists");
             }
 
             // Third Person Camera
@@ -109,6 +114,11 @@ namespace KroesSupermarketMod
             {
                 harmony.PatchAll(typeof(ChatCommandsPatch));
                 mls.LogInfo("Patched: chat commands (EXPERIMENTAL)");
+            }
+            if (config.showWorldBorders)
+            {
+                harmony.PatchAll(typeof(WorldBordersPatch));
+                mls.LogInfo("Patched: show world borders (EXPERIMENTAL)");
             }
         }
     }

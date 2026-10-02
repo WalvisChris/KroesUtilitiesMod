@@ -1,3 +1,9 @@
+# v1.2.0 (02/10/2026)  
+- Show customer shopping lists when clicking on them.  
+
+# v1.1.5 (30/09/2026)  
+- Show world borders (colliders) by pressing F8.  
+
 # v1.1.4 (29/09/2026)  
 - Build limits can now also be disabled for all axis (added x and z).  
 

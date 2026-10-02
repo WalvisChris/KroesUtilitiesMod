@@ -6,6 +6,7 @@ Some quality of life additions. Everything can be changed using the config file.
 - **Franchise Progress Bar:** a progress bar on the big screen shows how close you are to obtaining the next franchise point.  
 - **Euro Currency Symbol:** dollar signs get converted to euros, and points to comma's.  
 - **Build Limit:** you can build beyond the default world limits.  
+- **Custom Shopping List:** see what customers are buying by clicking on them.  
 
 ### Third Person Camera  
 - Use **Mouse Scroll Wheel** to change between first- and third person camera.  
@@ -19,6 +20,7 @@ Some quality of life additions. Everything can be changed using the config file.
 - **Custom Npc Hit Notifications:** changes NPCs message when they are hit. Meant as an inside joke for my friends.  
 - **Throwable Boxes:** boxes are thrown instead of dropped, collide with NPCs, players and even recyclers! currently inconsistent.  
 - **Chat Commands:** run commands from the chat using "/". See more details below.  
+- **World Borders:** show world borders and other hitboxes by pressing F8.  
 
 # Chat Commands  
 ### /npc  
